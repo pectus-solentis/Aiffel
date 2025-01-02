@@ -34,53 +34,38 @@ def open_db():
 	else:
 		student_and_scores = {}
 
-def student_id_input():
+def student_input():
 	global student_and_scores
-	student_id = input("점수를 입력할 학생의 학번을 입력하십시오.")
-	return student_id
-	#학생의 학번 받기
-
-def student_id_try(student_id):
-	student_grade = int(student_id[0:1])
-	student_class = int(student_id[1:3])
-	student_no = int(student_id[3:5])
 	while True:
+		student_id = input("점수를 입력할 학생의 학번을 입력하십시오.")
 		if not len(student_id) == 5:
 			print("학번은 5자리 숫자여야 합니다.")
 		else: break
+	student_grade = int(student_id[0:1])
 	while student_grade < 1 or student_grade > 3:
 		print("학년은 1부터 3까지의 값을 가져야 합니다.")
 		student_grade = int(input("점수를 입력할 학생의 학년을 입력하십시오."))
+	student_class = int(student_id[1:3])
 	while student_class < 1 or student_class > 20:
 		print("학급은 1부터 20까지의 값을 가져야 합니다.")
 		student_class = int(input("점수를 입력할 학생의 학급을 입력하십시오."))
+	student_no = int(student_id[3:5])
 	while student_no < 1 or student_no > 40:
 		print("학생 번호는 1부터 40까지의 값을 가져야 합니다.")
 		student_no = int(input("점수를 입력할 학생의 번호를 입력하십시오."))
-	return student_grade, student_class, student_no
-        
-def student_id_create(student_grade, student_class, student_no):
-    student_grade_str = str(student_grade).zfill(1)
-    student_class_str = str(student_class).zfill(2)
-    student_no_str = str(student_no).zfill(2)
-    student_id = student_grade_str + student_class_str + student_no_str
-    return student_id
- 
-def student_name_input():
+	student_grade_str = str(student_grade).zfill(1)
+	student_class_str = str(student_class).zfill(2)
+	student_no_str = str(student_no).zfill(2)
+	student_id = student_grade_str + student_class_str + student_no_str
+	#학생의 학번 받기 및 예외처리
 	while True:
 		student_name = input("입력할 학생의 이름을 한글로만 입력하십시오.")
 		if not is_all_korean(student_name):
 			print("입력하신 값에 한글 외의 문자가 포함되어 있습니다.")
 		else: break
-	return student_name
 	#학생의 이름 받기 및 예외처리
- 
-def student_identifier(student_id, student_name):
 	student = student_id + " " + student_name
 	#학생 식별자 (학번 + 이름) 만들기
-	return student
-
-def scores_input():
 	def get_score(subject):
 		while True:
 			pre_score = input(f"학생의 {subject} 점수를 입력하십시오.")
@@ -93,10 +78,7 @@ def scores_input():
 	scores = {}	
 	for subject in subjects:
 		scores[subject] = get_score(subject)
-	return scores
 	#학생의 과목별 점수 받기 및 예외처리
- 
-def student_db(student, scores):
 	student_and_scores[student] = scores
 	#2차원 딕셔너리에 저장
 	student_and_scores = dict(sorted(student_and_scores.items()))
